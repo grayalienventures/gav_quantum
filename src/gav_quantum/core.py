@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import combinations, product
 
 
 ZERO = np.array([1, 0])
@@ -46,7 +47,7 @@ def GHZ(N):
 # Returns the operator specified via tensor notation
 # INPUTS
 #     N - Number of qubits
-#     nonidentities - List of tuples specifying qubit number (indexed at 0) in ascending order and Pauli operator.  
+#     nonidentities - List of tuples specifying qubit number (indexed at 0) in ascending order and Pauli operator 
 #         Example: [(0,X),(2,'Y')]
 def operator_from_sparse_pauli(N, nonidentities):
     tup = lambda value, tuples: next(((first, second) for first, second in tuples if first == value), 0)
@@ -59,3 +60,30 @@ def operator_from_sparse_pauli(N, nonidentities):
             ret_arr = np.kron(ret_arr, np.identity(2)) if result == 0 else np.kron(ret_arr, result[1])
 
     return ret_arr
+
+
+# Generates a list of the subset of operator bases over N qubits of weight less than or equal to k
+# It is a tensor product of N operators, each of which is in {I, X, Y, Z} such that at most k are not I
+# INPUTS
+#     N - Number of qubits
+#     k - Maximum locality of Pauli operators acting upon qubits
+def Paulis_N_k(N, k):
+    retset = []
+    retset_verbose = []
+    retset.append(np.eye(2**N))
+    retset_verbose.append("I")
+    for k_index in range(k):
+        combos = combinations(range(N), k_index+1)
+        sigmas = [p for p in product([X,Y,Z], repeat=(k_index+1))]
+        sigmas_verbose = [p for p in product(['X','Y','Z'], repeat=(k_index+1))]
+        for c in combos:
+            for (sv_index, sv) in enumerate(sigmas_verbose):
+                paulis = []
+                paulis_verbose = []
+                for (tup_index, tup) in enumerate(c):
+                    paulis_verbose.append((tup, sv[tup_index]))
+                    paulis.append((tup, sigmas[sv_index][tup_index]))
+                retset_verbose.append(paulis_verbose)
+                retset.append(operator_from_sparse_pauli(N, paulis))
+            
+    return retset, retset_verbose

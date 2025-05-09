@@ -1,4 +1,4 @@
-# gav_quantum
+# gav-quantum
 
 `gav-quantum` is a quantum information utility package developed by Emil Marinov and Gray Alien Ventures.
 

@@ -1,9 +1,9 @@
 # gav_quantum
 
-`gav_quantum` is a quantum information utility package developed by Emil Marinov and Gray Alien Ventures.
+`gav-quantum` is a quantum information utility package developed by Emil Marinov and Gray Alien Ventures.
 
 ## Installation
-`pip install gav_quantum`
+`pip install gav-quantum`
 
 ## Objects
 
@@ -40,7 +40,10 @@
 
 *Inputs*
 * **N** - The number of qubits in the quantum state.
-* **nonidentities** - List of tuples specifying qubit number (indexed at 0) in ascending order and corresponding Pauli operator. Example: [(0,X),(2,'Y')]
+* **nonidentities** - List of tuples specifying qubit number (indexed at 0) in ascending order and corresponding Pauli operator. Example: [(0,X),(2,Y)]
 
 *Output*
 * A 2^N by 2^N operator.
+
+*Notes*
+* Make sure to have also imported whichever Pauli operators (`X`, `Y`, `Z`) are used in the `nonidentities` argument

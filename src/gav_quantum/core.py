@@ -87,3 +87,29 @@ def Paulis_N_k(N, k):
                 retset.append(operator_from_sparse_pauli(N, paulis))
             
     return retset, retset_verbose
+
+
+# INPUTS:
+#     N - Number of qubits
+#     k - Locality of qubit interactions
+#     mode - Ising (default) or Heisenberg
+def QMaxCutHamiltonian(N, k, mode="Ising"):
+    combos = combinations(range(N), k)
+
+    hamiltonian = np.zeros((2**N, 2**N), dtype=complex)
+    for c in combos:
+        X_nonidentities = [(c[i], X) for i in range(k)]
+        Y_nonidentities = [(c[i], Y) for i in range(k)]
+        Z_nonidentities = [(c[i], Z) for i in range(k)]
+        
+        h_e = operator_from_sparse_pauli(N, Z_nonidentities)
+        if(mode == "Heisenberg"):
+            h_e = h_e.astype(complex)
+            h_e += operator_from_sparse_pauli(N, Y_nonidentities)
+            h_e += operator_from_sparse_pauli(N, X_nonidentities)
+
+        h_e = np.identity(2**N) - h_e
+        h_e = 0.5 * h_e if mode == "Ising" else 0.25 * h_e
+        hamiltonian += h_e
+
+    return hamiltonian

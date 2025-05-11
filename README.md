@@ -25,7 +25,7 @@ Sample import statement below: \
 
 ## Functions
 
-`W(N)`
+### `W(N)`
 
 *Inputs*
 * **N** - The number of qubits in the quantum state.
@@ -33,7 +33,7 @@ Sample import statement below: \
 *Output*
 * A vector corresponding to the maximally entangled N-qubit W-state.
 
-`GHZ(N)`
+### `GHZ(N)`
 
 *Inputs*
 * **N** - The number of qubits in the quantum state.
@@ -41,7 +41,7 @@ Sample import statement below: \
 *Output*
 * A vector corresponding to the maximally entangled N-qubit GHZ-state.
 
-`operator_from_sparse_pauli(N, nonidentities)` - Creates an operator from a list of tuples of qubits and the non-identity Pauli operators acting upon them.
+### `operator_from_sparse_pauli(N, nonidentities)` - Creates an operator from a list of tuples of qubits and the non-identity Pauli operators acting upon them.
 
 *Inputs*
 * **N** - The number of qubits in the quantum state.
@@ -53,7 +53,8 @@ Sample import statement below: \
 *Notes*
 * Make sure to have also imported whichever Pauli operators (`X`, `Y`, `Z`) are used in the `nonidentities` argument
 
-`Paulis_N_k(N, k)` - Generates a list of the subset of operator bases over `N` qubits of weight less than or equal to `k`; it is a "tensor product of `N` operators, each of which is in {`I`, `X`, `Y`, `Z`} such that at most `k` are not `I`" [1].
+### `Paulis_N_k(N, k)`
+Generates a list of the subset of operator bases over `N` qubits of weight less than or equal to `k`; it is a "tensor product of `N` operators, each of which is in {`I`, `X`, `Y`, `Z`} such that at most `k` are not `I`" [1].
 
 *Inputs*
 * **N** - The number of qubits in the quantum state.
@@ -64,6 +65,18 @@ Sample import statement below: \
 
 *Notes*
 * Returns the full operator basis if `k = N`
+
+### `QMaxCutHamiltonian(N, k, mode="Ising")`
+Generates a Quantum MaxCut Hamiltonian.
+
+*Inputs*
+* **N** - The number of qubits in the quantum state.
+* **k** - The locality of qubit interations.
+* **mode** - `"Ising"` | `"Heisenberg"`
+
+*Output*
+* A 2^N by 2^N matrix corresponding to a QMaxCut Hamiltonian.
+
 
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

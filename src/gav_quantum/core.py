@@ -121,7 +121,6 @@ def QMaxCutHamiltonian(N, k, mode="Ising"):
 #     k - The locality of qubit interactions.
 def moment_cost_matrix(N, E, k):
     _, pauli_ops_verbose = Paulis_N_k(N, k)
-    print('LEN: ', len(pauli_ops_verbose))
     retmat = np.zeros((len(pauli_ops_verbose), len(pauli_ops_verbose)))
     A = E[0]
     B = E[1]

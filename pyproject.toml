@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gav_quantum"
-version = "0.0.5"
+version = "0.0.6"
 authors = [
   { name="Emil Marinov", email="emil@intp.io" }
 ]

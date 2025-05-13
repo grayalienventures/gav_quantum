@@ -113,3 +113,38 @@ def QMaxCutHamiltonian(N, k, mode="Ising"):
         hamiltonian += h_e
 
     return hamiltonian
+
+
+# INPUTS
+#     N - The number of qubits in the quantum state or nodes in the constraint graph.
+#     E - A 2-tuple corresponding to the edge of the constraint graph with constraint graph node numbers in ascending order as constraints.  Example: `(0, 2)`
+#     k - The locality of qubit interactions.
+def moment_cost_matrix(N, E, k):
+    _, pauli_ops_verbose = Paulis_N_k(N, k)
+    print('LEN: ', len(pauli_ops_verbose))
+    retmat = np.zeros((len(pauli_ops_verbose), len(pauli_ops_verbose)))
+    A = E[0]
+    B = E[1]
+    for index_row, pauli_op_row in enumerate(pauli_ops_verbose):
+        for index_col, pauli_op_col in enumerate(pauli_ops_verbose):
+            if(pauli_ops_verbose[index_row] != 'I' and pauli_ops_verbose[index_col] != 'I'
+              and len(pauli_ops_verbose[index_row]) > 1 and len(pauli_ops_verbose[index_col]) > 1):
+                reference_pauli = next((p for i, p in pauli_ops_verbose[index_row] if i == A), 'I')
+
+                valid = False
+                for tup in pauli_ops_verbose[index_row]:
+                    if(tup[0] == B and tup[1] == reference_pauli):
+                        valid = True
+                if(valid):
+                    valid_A = False
+                    valid_B = False
+                    for tup in pauli_ops_verbose[index_col]:
+                        if(tup[0] == A and tup[1] == reference_pauli):
+                            valid_A = True
+                        if(tup[0] == B and tup[1] == reference_pauli):
+                            valid_B = True
+                    if(valid_A and valid_B):
+                        retmat[index_row][index_col] = -0.5
+                        retmat[index_col][index_row] = -0.5    
+
+    return retmat

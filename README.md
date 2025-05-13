@@ -77,6 +77,17 @@ Generates a Quantum MaxCut Hamiltonian.
 *Output*
 * A 2^N by 2^N matrix corresponding to a QMaxCut Hamiltonian.
 
+### `moment_constraint_matrix(N, E, k)`
+Generates the constraint matrix accompanying the moment matrix for a Lasserre semidefinite program assuming an anti-ferromagnetic state.  Entries correspond to a matrix with rows and columns indexed by the subset of operator bases (see `Paulis_N_k(N, k)`).  A row with adjacent edges with the same Pauli operator and a column with the same adjacent edges and Pauli operator between them are penalized with a `-0.5` weight for their anti-alignment.  For example, if the edges in question are 0 and 2, row `X_0 X_2` and column `X_0 X_2` are penalized for not exhibiting anti-alignment.
+
+*Inputs*
+* **N** - The number of qubits in the quantum state or nodes in the constraint graph.
+* **E** - A 2-tuple corresponding to the edge of the constraint graph with constraint graph node numbers in ascending order as constraints.  Example: `(0, 2)`
+* **k** - The locality of qubit interactions.
+
+*Output*
+* A $\gamma$ by $\gamma$ matrix where $\gamma$ is the size of the subset of operator bases corresponding to the inputted `N` and `k` and the entries are real.
+
 
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

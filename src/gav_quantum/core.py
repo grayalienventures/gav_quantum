@@ -71,7 +71,7 @@ def Paulis_N_k(N, k):
     retset = []
     retset_verbose = []
     retset.append(np.eye(2**N))
-    retset_verbose.append("I")
+    retset_verbose.append([])
     for k_index in range(k):
         combos = combinations(range(N), k_index+1)
         sigmas = [p for p in product([X,Y,Z], repeat=(k_index+1))]
@@ -126,9 +126,8 @@ def moment_cost_matrix(N, E, k):
     B = E[1]
     for index_row, pauli_op_row in enumerate(pauli_ops_verbose):
         for index_col, pauli_op_col in enumerate(pauli_ops_verbose):
-            if(pauli_ops_verbose[index_row] != 'I' and pauli_ops_verbose[index_col] != 'I'
-              and len(pauli_ops_verbose[index_row]) > 1 and len(pauli_ops_verbose[index_col]) > 1):
-                reference_pauli = next((p for i, p in pauli_ops_verbose[index_row] if i == A), 'I')
+            if(len(pauli_ops_verbose[index_row]) > 1 and len(pauli_ops_verbose[index_col]) > 1):
+                reference_pauli = next((p for i, p in pauli_ops_verbose[index_row] if i == A), [])
 
                 valid = False
                 for tup in pauli_ops_verbose[index_row]:

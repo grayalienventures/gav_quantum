@@ -146,3 +146,8 @@ def moment_cost_matrix(N, E, k):
                         retmat[index_col][index_row] = -0.5    
 
     return retmat
+
+
+# Returns list of the nth roots of unity, [1, \omega, \omega^2, ...]
+def rootsOfUnity(n):
+    return np.array([np.exp(2*np.pi*1j*ns/n) for ns in range(n)])

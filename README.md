@@ -88,6 +88,11 @@ Generates the constraint matrix accompanying the moment matrix for a Lasserre se
 *Output*
 * A $\gamma$ by $\gamma$ matrix where $\gamma$ is the size of the subset of operator bases corresponding to the inputted `N` and `k` and the entries are real.
 
+### `rootsOfUnity(n)`
+Returns a list of the $n$th roots of unity.
+
+*Output*
+* A list of the $n$th roots of unity i.e. [1, \omega, \omega^2, ..., \omega^{n-1}]
 
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

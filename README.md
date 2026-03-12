@@ -94,5 +94,21 @@ Returns a list of the $n$th roots of unity.
 *Output*
 * A list of the $n$th roots of unity i.e. [1, \omega, \omega^2, ..., \omega^{n-1}]
 
+### `WeylBrauer(n)`
+
+*Inputs*
+* **n** - The number of required Clifford generators
+
+*Output*
+* Array of generators
+
+### `vectorToUnitaryIsometry(vector)`
+
+*Inputs*
+* **vector** - A unit vector to be embedded into a unitary via Tsirelson's map
+
+*Output*
+* An order-2 unitary
+
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

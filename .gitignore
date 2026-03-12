@@ -2,3 +2,4 @@ __pycache__/
 build/
 dist/
 gav_quantum.egg-info/
+.envpythonpackage

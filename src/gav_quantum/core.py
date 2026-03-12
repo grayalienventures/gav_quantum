@@ -1,5 +1,6 @@
 import numpy as np
 from itertools import combinations, product
+import math
 
 
 ZERO = np.array([1, 0])
@@ -151,3 +152,37 @@ def moment_cost_matrix(N, E, k):
 # Returns list of the nth roots of unity, [1, \omega, \omega^2, ...]
 def rootsOfUnity(n):
     return np.array([np.exp(2*np.pi*1j*ns/n) for ns in range(n)])
+
+
+# # Generates explicit Clifford algebra representation from generalized Pauli operators
+# Returns array of generators
+# INPUTS
+#   n - number of required Clifford generators
+def WeylBrauer(n):
+    nn = n if n%2 == 0 else n+1
+    k = int(nn/2)
+    operators = []
+    for i in range(k):
+        sparse_pauli_odd = []
+        sparse_pauli_even = []
+        for index in range(i):
+            sparse_pauli_odd.append((index, Z))
+            sparse_pauli_even.append((index, Z))
+        sparse_pauli_odd.append((i, X))
+        sparse_pauli_even.append((i, Y))
+        operators.append(operator_from_sparse_pauli(k, sparse_pauli_odd))
+        operators.append(operator_from_sparse_pauli(k, sparse_pauli_even))
+    return operators[:n]
+
+
+# Returns unitary matrix of Tsirelson's vector encoding
+# NOTE: @vector must be unit vector
+def vectorToUnitaryIsometry(vector):
+    vector = vector / np.linalg.norm(vector)
+    n = len(vector)
+    operators = WeylBrauer(n)
+    dim = 2**(math.ceil(n/2))
+    unitary = np.zeros((dim, dim), dtype=complex)
+    for i in range(n):
+        unitary += vector[i] * operators[i]
+    return unitary

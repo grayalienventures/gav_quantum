@@ -110,5 +110,17 @@ Returns a list of the $n$th roots of unity.
 *Output*
 * An order-2 unitary
 
+### `roundToOrderKUnitary(A, k, method)`
+*Inputs*
+* **A** - Operator to be rounded
+* **k** - Number of partitions
+* **method** - Type of rounding; 'polar' or 'schur'; Note, 'schur' not yet implemented
+
+### `randomHaarUnitary(n)`
+Generate random Haar unitary operator of dimension n by n
+
+### `diagOrderKUnitaries(k, d)`
+Generate array of diagonal basis order-@k unitaries of dimension @d
+
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

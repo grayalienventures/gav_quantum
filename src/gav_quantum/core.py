@@ -1,6 +1,7 @@
 import numpy as np
 from itertools import combinations, product
 import math
+import scipy
 
 
 ZERO = np.array([1, 0])
@@ -186,3 +187,52 @@ def vectorToUnitaryIsometry(vector):
     for i in range(n):
         unitary += vector[i] * operators[i]
     return unitary
+
+
+# INPUTS
+# @A - operator to be rounded
+# @k - number of partitions
+# @method - Type of rounding, based on 'polar' or 'schur'
+def roundToOrderKUnitary(A, k, method='polar'):
+    A = np.asarray(A, dtype=np.complex128)
+    if(method == 'polar'):
+        u, p = scipy.linalg.polar(A)
+        rootsOfUnity = rootsOfUnity(k)
+        eigs, eigvs = np.linalg.eig(u)
+        nearestEigs = []
+        for eig in eigs:
+            phaseDeltaMin = np.inf
+            nearestEig = complex(0,0)
+            # If tie exists, picks first root of unity;
+            #   introduces deterministic bias
+            for root in rootsOfUnity:
+                delta = abs(np.angle(np.exp(1j*(np.angle(root) - np.angle(eig)))))
+                if(delta < phaseDeltaMin):
+                    phaseDeltaMin = delta
+                    nearestEig = root
+            nearestEigs.append(nearestEig)
+
+        roundedUnitary = eigvs @ np.diag(nearestEigs) @ np.linalg.inv(eigvs)
+        # Re-"unitize" @roundedUnitary
+        roundedUnitary, _ = scipy.linalg.polar(roundedUnitary)
+        return roundedUnitary
+    else:
+        print('Schur')
+
+
+# Generate random Haar unitary operator of dimension n by n
+def randomHaarUnitary(n):
+    Z = np.random.randn(n, n) + 1j*np.random.randn(n, n)
+    Q, R = np.linalg.qr(Z)
+    d = np.diag(R)
+    Q = Q * (d / np.abs(d))   # broadcast across columns
+    return Q
+
+
+# Generate array of diagonal basis order-@k unitaries of dimension @d
+def diagOrderKUnitaries(k, d):
+    roots = rootsOfUnity(k)
+    unitaries = []
+    for diag_roots in product(roots, repeat=d):
+        unitaries.append(np.diag(diag_roots))
+    return unitaries

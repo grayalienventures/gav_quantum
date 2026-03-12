@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools >= 77.0.3", "numpy"]
+requires = ["setuptools >= 77.0.3", "numpy", "scipy"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "gav_quantum"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Emil Marinov", email="emil@intp.io" }
 ]

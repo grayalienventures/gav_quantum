@@ -197,7 +197,7 @@ def roundToOrderKUnitary(A, k, method='polar'):
     A = np.asarray(A, dtype=np.complex128)
     if(method == 'polar'):
         u, p = scipy.linalg.polar(A)
-        rootsOfUnity = rootsOfUnity(k)
+        roots = rootsOfUnity(k)
         eigs, eigvs = np.linalg.eig(u)
         nearestEigs = []
         for eig in eigs:
@@ -205,7 +205,7 @@ def roundToOrderKUnitary(A, k, method='polar'):
             nearestEig = complex(0,0)
             # If tie exists, picks first root of unity;
             #   introduces deterministic bias
-            for root in rootsOfUnity:
+            for root in roots:
                 delta = abs(np.angle(np.exp(1j*(np.angle(root) - np.angle(eig)))))
                 if(delta < phaseDeltaMin):
                     phaseDeltaMin = delta

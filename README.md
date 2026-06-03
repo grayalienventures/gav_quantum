@@ -122,5 +122,8 @@ Generate random Haar unitary operator of dimension n by n
 ### `diagOrderKUnitaries(k, d)`
 Generate array of diagonal basis order-@k unitaries of dimension @d
 
+### `greedyEpsilonUnitaries(k, d, epsilon, numSamples)`
+Greedy epsilon packing of order-@k unitaries of dimension @d.  Compact sets, amirite?
+
 ## References
 [1] Parekh, O., & Thompson, K. (2021). Application of the Level-2 Quantum Lasserre Hierarchy in Quantum Approximation Algorithms. arXiv. [https://doi.org/10.48550/arXiv.2105.05698](https://doi.org/10.48550/arXiv.2105.05698)

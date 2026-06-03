@@ -236,3 +236,27 @@ def diagOrderKUnitaries(k, d):
     for diag_roots in product(roots, repeat=d):
         unitaries.append(np.diag(diag_roots))
     return unitaries
+
+
+
+def greedyEpsilonUnitaries(k, d, epsilon, numSamples):
+    unitaries = []
+    for _ in range(numSamples):
+        haarZ = (np.random.normal(0, 1, (d,d)) + 1j * np.random.normal(0, 1, (d,d))) / np.sqrt(2)
+        Q, R = np.linalg.qr(haarZ)
+        diagR = np.diag(R)
+        ph = diagR / np.where(np.abs(diagR) > 0, np.abs(diagR), 1.0)
+        V = Q @ np.diag(np.conj(ph))
+        omega = np.exp(2j*np.pi/k)
+        exponents = np.random.randint(0, k, size=d)
+        D = np.diag(omega ** exponents)
+        sample = V @ D @ V.conj().T
+        addSample = True
+        for unitary in unitaries:
+            cheapNorm = max(0, 2*d - 2 * abs(np.trace(unitary.conj().T @ sample)))
+            if cheapNorm < epsilon**2:
+                addSample = False
+                break
+        if addSample:
+            unitaries.append(sample)
+    return unitaries
